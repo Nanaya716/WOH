@@ -1,0 +1,30 @@
+package com.jxc.controller;
+
+import com.jxc.entity.PurchaseRecords;
+import com.jxc.entity.SalesRecords;
+import com.jxc.service.PurchaseRecordsService;
+import com.jxc.service.SalesRecordsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Controller
+public class SalesRecordsController {
+
+    @Autowired
+    private SalesRecordsService salesRecordsService;
+
+    @GetMapping("/shippingDetails")
+    public String showPurchaseDetails(@RequestParam(name = "id") Integer productId, Model model) {
+        // 根据商品ID查询进货详情数据
+        List<SalesRecords> salesDetails = salesRecordsService.queryListByProductId(productId);
+
+        // 将查询结果传递给视图
+        model.addAttribute("salesResults", salesDetails);
+        return "shippingDetails"; // 请替换成你的实际页面名称
+    }
+}
